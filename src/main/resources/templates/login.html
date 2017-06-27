@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="jp" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン</title>
+    <style>
+        th {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1 align="center">発注者管理システム</h1>
+<hr>
+<div align="center">
+    <table border="0">
+        <form th:action="@{/login}" method="post">
+            <p th:if="${param.error}"><em>ユーザーIDもしくはパスワードが間違っています</em></p>
+            <tr>
+                <th>
+                    ユーザーID
+                </th>
+                <td>
+                    <input type="text" name="user_id" value="" size="24">
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    パスワード
+                </th>
+                <td>
+                    <input type="password" name="password" value="" size="24">
+                </td>
+            </tr>
+            <tr>
+                <td align="center" colspan="2">
+                    <input type="submit" value="ログイン">
+                </td>
+            </tr>
+        </form>
+    </table>
+</div>
+</body>
+</html>

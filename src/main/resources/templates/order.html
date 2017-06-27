@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>受注</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/order.css}">
+    <script th:inline="javascript">
+        /*<![CDATA[>*/
+        var items = /*[[${items}]]*/ [];
+        var methods = /*[[${methods}]]*/ [];
+        var rootStocks = /*[[${rootStocks}]]*/ [];
+        var tray = /*[[${tray}]]*/ [];
+        /*]]>*/
+    </script>
+    <script type="text/javascript" th:src="@{/js/order.js}"></script>
+</head>
+<body>
+<div id="all" align="center">
+    <div class="orderhead" align="center">
+        <p>注文受付</p>
+        <p>[[${#httpServletRequest.remoteUser}]]</p>
+    </div>
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <input class="logout" type="submit" value="ログアウト" onclick="">
+        </form>
+    </div>
+    <!-- ▼ ここから未確定注文表▼ -->
+    <div id="unorder">
+        <div class="middleh" align="center">
+            <p>未確定注文</p>
+        </div>
+        <div class="head">
+            <table class="tab">
+                <colgroup>
+                    <col class="col1"/>
+                    <col class="col2"/>
+                    <col class="col3"/>
+                    <col class="col4"/>
+                    <col class="col5"/>
+                    <col class="col6"/>
+                    <col class="col7"/>
+                    <col class="col8"/>
+                    <col class="col9"/>
+                    <col class="col10"/>
+                    <col class="col11"/>
+                    <col class="scrcol"/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>品目名</th>
+                    <th>育苗方法</th>
+                    <th>台木名</th>
+                    <th>トレイ規格</th>
+                    <th>苗数</th>
+                    <th>トレイ数</th>
+                    <th>受け取り日</th>
+                    <th>単価</th>
+                    <th>金額</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="body">
+            <table>
+                <colgroup>
+                    <col class="col1"/>
+                    <col class="col2"/>
+                    <col class="col3"/>
+                    <col class="col4"/>
+                    <col class="col5"/>
+                    <col class="col6"/>
+                    <col class="col7"/>
+                    <col class="col8"/>
+                    <col class="col9"/>
+                    <col class="col10"/>
+                    <col class="col11"/>
+                </colgroup>
+                <tbody id="tabbody">
+                </tbody>
+            </table>
+        </div>
+        <div class="addbtn">
+            <input id="add" type="button" value="+" onclick="addList(tabbody)">
+        </div>
+        <div id="sum">
+            <p>合計????円</p>
+        </div>
+
+        <div class="addbtn">
+            <input id="confbtn" type="button" value="注文確定" onclick="">
+        </div>
+    </div>
+    <!-- ▲ ここまでが未確定注文表▲ -->
+
+    <!-- ▼ ここから確定注文表▼ -->
+    <div id="order">
+        <div class="middleh" align="center">
+            <p>確定注文</p>
+        </div>
+        <div>
+            <select>
+                <option value="order">注文済み一覧</option>
+                <option value=""></option>
+            </select>
+        </div>
+
+        <div class="head">
+            <table class="tab">
+                <colgroup>
+                    <col class="col1"/>
+                    <col class="col2"/>
+                    <col class="col3"/>
+                    <col class="col4"/>
+                    <col class="col5"/>
+                    <col class="col6"/>
+                    <col class="col7"/>
+                    <col class="col8"/>
+                    <col class="col9"/>
+                    <col class="col10"/>
+                    <col class="col11"/>
+                    <col class="col12"/>
+                    <col class="scrcol"/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>No</th>
+                    <th>品目名</th>
+                    <th>育苗方法</th>
+                    <th>台木名</th>
+                    <th>トレイ規格</th>
+                    <th>苗数</th>
+                    <th>トレイ数</th>
+                    <th>受け取り日</th>
+                    <th>単価</th>
+                    <th>金額</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+        <div class="body">
+            <table>
+                <colgroup>
+                    <col class="col1"/>
+                    <col class="col2"/>
+                    <col class="col3"/>
+                    <col class="col4"/>
+                    <col class="col5"/>
+                    <col class="col6"/>
+                    <col class="col7"/>
+                    <col class="col8"/>
+                    <col class="col9"/>
+                    <col class="col10"/>
+                    <col class="col11"/>
+                    <col class="col12"/>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td>
+                        <p>1</p>
+                    </td>
+                    <td>
+                        <select>
+                            <option value="Cucumber">きゅうり</option>
+                            <option value="lettuce">レタス</option>
+                            <option value="トマト">トマト</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select>
+                            <option value="own_roots">自根</option>
+                            <option value="grafted">接ぎ木</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select>
+                            <option value="none">なし</option>
+                            <option value="stock1">台木1</option>
+                            <option value="stock2">台木2</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select>
+                            <option value="128">128穴</option>
+                            <option value="200">200穴</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="txt" name="seed" size="6" maxlength="4">
+                    </td>
+                    <td>
+                        <p>?個</p>
+                    </td>
+                    <td>
+                        <input type="date" name="cal" min="" max="" value="2017-06-14">
+                    </td>
+                    <td>
+                        <p>??円</p>
+                    </td>
+                    <td>
+                        <p>???円</p>
+                    </td>
+                    <td>
+                        <input type="button" value="編" onclick="">
+                    </td>
+                    <td>
+                        <input type="button" value="×" onclick="">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- ▲  ここまでが確定注文表▲ -->
+    </div>
+</div>
+</body>
+</html>
